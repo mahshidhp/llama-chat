@@ -1,0 +1,241 @@
+:root {
+  --primary: #2ec1ac;
+  --secondary: #5c65c1;
+  --tertiary: #d2e603;
+  --quaternary: #eff48e;
+  --black: #222827;
+  --black-75: rgba(34, 40, 39, 0.75);
+  --black-50: rgba(34, 40, 39, 0.502);
+  --black-25: rgba(34, 40, 39, 0.25);
+  --black-10: rgba(34, 40, 39, 0.1);
+  --black-5: rgba(34, 40, 39, 0.051);
+  --primary-50: rgba(46, 193, 172, 0.5);
+  --primary-25: rgba(46, 193, 172, 0.25);
+  --llama-eye-deg: 90deg;
+  --gradient: linear-gradient(to right top, #2ec1ac, #00acc7, #0091d6, #4a6dc7);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@200;300;400&display=swap');
+
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  max-height: 100%;
+  font-family: 'Helvetica Neue', 'Vazirmatn', sans-serif;
+}
+
+::selection {
+  background-color: var(--primary-50);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* .cursor-pointer:hover {
+  color: var(--secondary);
+} */
+
+.gradient-bg {
+  background-image: var(--gradient);
+}
+
+.primary-btn,
+.primary-btn:hover,
+.primary-btn:active {
+  background-color: var(--primary);
+  color: white;
+  border-radius: 0.375rem;
+  border: 1px var(--primary);
+  padding: 0.375rem 0.75rem;
+  margin: 16px;
+}
+
+.primary-btn:disabled {
+  background-color: var(--primary-50);
+}
+
+.form-group input,
+.form-group input:focus {
+  background-color: var(--black-5);
+}
+
+.inbox-search {
+  background-color: var(--black-5);
+  border-top-right-radius: 0.375rem;
+  border-top-left-radius: 0.375rem;
+  height: 64px;
+  z-index: 10;
+}
+
+.inbox {
+  background-color: var(--black-5);
+}
+
+.inbox-content {
+  top: 64px;
+  bottom: 0px;
+}
+
+.inbox-item {
+  background-color: white;
+  margin-bottom: 2px;
+}
+
+.inbox-item:hover {
+  background-color: var(--quaternary);
+}
+
+.inbox-badge {
+  background-color: var(--primary);
+}
+
+.inbox-name {
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.inbox-status {
+  color: var(--black-50);
+  font-size: 16;
+}
+
+.inbox-initial {
+  background-color: var(--secondary);
+  color: white;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  padding: 10px;
+}
+
+.dropdown-item:active {
+  background-color: var(--primary);
+}
+
+.add-contact:hover {
+  background-color: var(--primary-50);
+}
+
+.add-contact {
+  background-color: var(--primary-25);
+}
+
+.chat-box-header {
+  background-color: white;
+  border-top-right-radius: 0.375rem;
+  border-top-left-radius: 0.375rem;
+  height: 64px;
+}
+
+.chat-box-form {
+  height: 64px;
+  background-color: white;
+  border-bottom-right-radius: 0.375rem;
+  border-bottom-left-radius: 0.375rem;
+}
+
+.chat-input-box input {
+  border: 0px;
+}
+
+.emoji-picker {
+  bottom: 64px;
+}
+
+.msg {
+  border-radius: 0.375rem;
+  max-width: 300px;
+}
+
+.msg-info {
+  color: var(--black-50);
+  font-size: smaller;
+}
+
+.msg-from-me {
+  background-color: var(--quaternary);
+}
+
+.msg-from-others {
+  background-color: white;
+}
+
+.send-btn {
+  background-color: var(--primary);
+  color: white;
+  border: 1px var(--primary);
+  padding: 0.375rem 0.75rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.profile-pic {
+  border-radius: 50%;
+  width: 250px;
+  height: 250px;
+}
+
+.animation {
+  max-width: 200px;
+}
+
+#eye1,
+#eye2 {
+  transform: rotate(var(--llama-eye-deg));
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.app {
+  min-height: 80%;
+  max-height: 80%;
+}
+
+.scrollable {
+  max-height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollable::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollable {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Desktop */
+@media (min-width: 600px) {
+  .main {
+    background-image: var(--gradient);
+  }
+  .chat-box {
+    background-color: var(--primary-50);
+    top: 64px;
+    bottom: 64px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .main {
+    background-color: white;
+  }
+  .chat-box {
+    background-image: var(--gradient);
+    top: 64px;
+    bottom: 64px;
+  }
+}
