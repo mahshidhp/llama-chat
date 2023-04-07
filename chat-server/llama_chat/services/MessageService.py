@@ -9,4 +9,5 @@ class MessageService:
     @staticmethod
     def get_messages(user_id1, user_id2, page):
         messages = MessageDAO.get_conversation(user_id1, user_id2, page)
-        return messages
+        messages_serialized = [msg.serialize() for msg in messages]
+        return messages_serialized

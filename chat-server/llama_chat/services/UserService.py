@@ -19,14 +19,14 @@ class UserService:
         user = UserDAO.get_by_id(user_id)
         if not user:
             raise UserNotFound
-        return user
+        return user.serialize()
 
     @staticmethod
     def get_user_by_username(username):
         user = UserDAO.get_by_username(username)
         if not user:
             raise UserNotFound
-        return user
+        return user.serialize()
 
     def add_contact(self, contact_username):
         new_contact = UserDAO.get_by_username(contact_username)
@@ -40,3 +40,6 @@ class UserService:
         contacts_serialized = [contact.serialize() for contact in contacts]
         return contacts_serialized
 
+    def set_profile_pic(self, username):
+        # @TODO
+        pass
