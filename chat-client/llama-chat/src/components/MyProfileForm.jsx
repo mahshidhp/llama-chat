@@ -65,44 +65,58 @@ class MyProfileForm extends Form {
 
   updateProfilePic = () => {
     const profilePic = <ProfilePic username={authService.getCurrentUser()} />
-    this.setState(profilePic)
+    this.setState({ profilePic })
   }
 
   render() {
     return (
       <div className="row mx-0">
         <CloseSection onClose={this.props.onCloseMyProfile} />
-        <div className="row justify-content-center align-items-center px-0 mx-0">
-          <div className="col-sm-8 text-center">{this.state.profilePic}</div>
-          <div className="col-sm-6">
-            <Input
-              name="profilePic"
-              label="Upload a new profile picture:"
-              type="file"
-              onChange={this.onProfilePicUpload}
-            />
+        <div className="px-0 mx-0 position-absolute w-100 profile-content scrollable">
+          {this.renderProfilePicSection()}
+          {this.renderMyProfileForm()}
+        </div>
+      </div>
+    )
+  }
+
+  renderProfilePicSection = () => {
+    return (
+      <div className="row justify-content-center align-items-center ">
+        <div className="col-sm-8 text-center">{this.state.profilePic}</div>
+        <div className="col-sm-6">
+          <Input
+            name="profilePic"
+            label="Upload a new profile picture:"
+            type="file"
+            onChange={this.onProfilePicUpload}
+          />
+        </div>
+      </div>
+    )
+  }
+
+  renderMyProfileForm = () => {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <div className="row justify-content-center">
+          <div className="col-sm-5">
+            {this.renderInput('firstName', 'First name')}
+          </div>
+          <div className="col-sm-5">
+            {this.renderInput('lastName', 'Last name')}
           </div>
         </div>
-        <form onSubmit={this.handleSubmit}>
-          <div className="row justify-content-center">
-            <div className="col-sm-5">
-              {this.renderInput('firstName', 'First name')}
-            </div>
-            <div className="col-sm-5">
-              {this.renderInput('lastName', 'Last name')}
-            </div>
+        <div className="row justify-content-center">
+          <div className="col-sm-10">
+            {this.renderInput('phone', 'Phone number', 'tel')}
           </div>
-          <div className="row justify-content-center">
-            <div className="col-sm-10">
-              {this.renderInput('phone', 'Phone number', 'tel')}
-            </div>
-            <div className="col-sm-10">
-              {this.renderInput('bio', 'Tell us about yourself')}
-            </div>
-            <div className="col-5 text-center">{this.renderButton('Save')}</div>
+          <div className="col-sm-10">
+            {this.renderInput('bio', 'Tell us about yourself')}
           </div>
-        </form>
-      </div>
+          <div className="col-5 text-center">{this.renderButton('Save')}</div>
+        </div>
+      </form>
     )
   }
 }

@@ -5,7 +5,10 @@ import { ReactComponent as SampleProfile } from '../media/profile.svg'
 class ProfilePic extends Component {
   render() {
     const { username } = this.props
-    const profilePicUrl = profileService.getProfilePictureURL(username)
+    const profilePicUrl = `${profileService.getProfilePictureURL(
+      username,
+    )}?${new Date().getTime()}`
+
     return (
       <object
         data={profilePicUrl}

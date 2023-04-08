@@ -183,6 +183,28 @@ body,
   height: 250px;
 }
 
+.profile-content {
+  top: 64px;
+  bottom: 0px;
+}
+
+.profile-item {
+  height: 30px;
+  font-size: 18px;
+}
+
+.profile-item-title {
+  color: var(--black-50);
+}
+
+.profile-item-value {
+  font-weight: 500;
+}
+
+.close-section {
+  height: 64px;
+}
+
 .animation {
   max-width: 200px;
 }

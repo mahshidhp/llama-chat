@@ -24,17 +24,19 @@ class Profile extends Component {
     const { username } = this.state.profile
 
     return (
-      <div className="scrollable">
+      <React.Fragment>
         <CloseSection onClose={this.props.onCloseProfile} />
-        {!username && this.renderErrorMsg()}
-        {username && this.rederProfile()}
-      </div>
+        <div className="px-0 mx-0 position-absolute w-100 profile-content scrollable">
+          {!username && this.renderErrorMsg()}
+          {username && this.renderProfile()}
+        </div>
+      </React.Fragment>
     )
   }
 
   renderErrorMsg = () => {
     return (
-      <div className="row justify-content-center">
+      <div className="row justify-content-center mx-0">
         <div className="col-sm-6 alert alert-danger my-2 py-2 px-auto mx-auto">
           Unable to get user profile.
         </div>
@@ -42,17 +44,16 @@ class Profile extends Component {
     )
   }
 
-  rederProfile = () => {
+  renderProfile = () => {
     const { username } = this.state.profile
-
     return (
       <React.Fragment>
-        <div className="row justify-content-center">
-          <div className="col-md-4 col-sm-6 px-auto mx-auto text-center">
+        <div className="row justify-content-center mx-0">
+          <div className="col-md-4 col-sm-6 w-100 text-center">
             <ProfilePic username={username} />
           </div>
         </div>
-        <div className="row justify-content-center">
+        <div className="row justify-content-center mx-0">
           {this.renderUserInfo()}
         </div>
       </React.Fragment>
@@ -64,20 +65,27 @@ class Profile extends Component {
     return (
       <div className="col-sm-8 px-4 m-4">
         <h4>{`${first_name} ${last_name}`}</h4>
-        <p
-          className="cursor-pointer"
-          onClick={() => this.copyToClipboard(username)}
-        >
-          @{username}
-        </p>
-        <p
-          className="cursor-pointer"
-          onClick={() => this.copyToClipboard(phone)}
-        >
-          {phone}
-        </p>
-        <p>{bio}</p>
+        <hr />
+        <table className="w-100">
+          {username && this.renderTableRow('username', '@' + username)}
+          {phone && this.renderTableRow('phone', phone)}
+          {bio && this.renderTableRow('bio', bio)}
+        </table>
       </div>
+    )
+  }
+
+  renderTableRow = (title, value) => {
+    return (
+      <tr className="profile-item">
+        <td className="profile-item-title">{title}</td>
+        <td
+          className="cursor-pointer profile-item-value"
+          onClick={() => this.copyToClipboard(value)}
+        >
+          {value}
+        </td>
+      </tr>
     )
   }
 
