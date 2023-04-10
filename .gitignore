@@ -1,0 +1,5 @@
+/.idea
+/venv
+/chat-client/llama-chat/node_modules
+/chat-server/llama_chat/.env
+.DS_Store

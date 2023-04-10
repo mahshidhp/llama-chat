@@ -2,7 +2,6 @@ import jwt
 from dotenv import dotenv_values
 from datetime import datetime, timedelta
 
-from llama_chat.services.UserService import UserService
 from llama_chat.DAO.UserDAO import UserDAO
 from llama_chat.Exceptions.InvalidCredentials import InvalidCredentials
 
@@ -45,7 +44,7 @@ class AuthService:
         try:
             decoded_jwt = jwt.decode(user_jwt, jwt_key, algorithms=["HS256"], options={"verify_iat": False})
             user_id = decoded_jwt["id"]
-            self.user = UserService.get_user_by_id(user_id)
+            self.user = UserDAO.get_by_id(user_id)
             return self.user
         except KeyError:
             raise InvalidCredentials

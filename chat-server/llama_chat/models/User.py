@@ -16,7 +16,6 @@ class User(db.Model):
     first_name = db.Column(db.String(50), nullable=True)
     last_name = db.Column(db.String(50), nullable=True)
     phone = db.Column(db.String(50), nullable=True)
-    profile_url = db.Column(db.String(1000), nullable=True)
     bio = db.Column(db.String(1000), nullable=True)
 
     contacts = db.relationship(
@@ -33,6 +32,5 @@ class User(db.Model):
             "first_name": self.first_name,
             "last_name": self.last_name,
             "phone": self.phone,
-            "profile_url": self.profile_url,
             "bio": self.bio,
         }
