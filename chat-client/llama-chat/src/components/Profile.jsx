@@ -90,7 +90,9 @@ class Profile extends Component {
   }
 
   copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text)
+    try {
+      navigator.clipboard.writeText(text)
+    } catch (error) {}
   }
 }
 

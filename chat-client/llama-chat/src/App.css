@@ -103,7 +103,7 @@ body,
 
 .inbox-status {
   color: var(--black-50);
-  font-size: 16;
+  font-size: 14px;
 }
 
 .inbox-initial {

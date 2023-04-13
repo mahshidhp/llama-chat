@@ -70,9 +70,9 @@ class MyProfileForm extends Form {
 
   render() {
     return (
-      <div className="row mx-0">
+      <div className="row mx-0 px-0">
         <CloseSection onClose={this.props.onCloseMyProfile} />
-        <div className="px-0 mx-0 position-absolute w-100 profile-content scrollable">
+        <div className="position-absolute profile-content scrollable px-3 mx-0 w-100">
           {this.renderProfilePicSection()}
           {this.renderMyProfileForm()}
         </div>

@@ -5,25 +5,22 @@ import { faSmile } from '@fortawesome/free-regular-svg-icons'
 import EmojiPicker from 'emoji-picker-react'
 import ChatDialogue from './common/ChatDialogue'
 import authService from '../services/authService'
-import messageService from '../services/messageService'
 
 class ChatBox extends Component {
-  state = { messages: [], lastMessageId: null, page: 1, showEmojiPicker: false }
+  state = { page: 1, showEmojiPicker: false }
 
   componentDidMount = () => {
     this.scrollToBottom()
   }
 
-  componentDidUpdate() {
-    this.scrollToBottom()
-  }
-
-  getMessages = async () => {
-    const { contactUsername } = this.props
-    // const { page, lastMessageId } = this.state
-    const messages = await messageService.getMessages(contactUsername)
-    console.log('meeeee', messages)
-    this.setState({ messages })
+  componentDidUpdate(prevProps, prevState) {
+    const { messages, unsentMessages } = this.props
+    if (
+      prevProps.messages.length !== messages.length ||
+      prevProps.unsentMessages.length !== unsentMessages.length
+    ) {
+      this.scrollToBottom()
+    }
   }
 
   render() {
@@ -91,7 +88,7 @@ class ChatBox extends Component {
         ))}
         {this.props.unsentMessages.map((msg) => (
           <ChatDialogue
-            key={msg.createdAt}
+            key={msg.created_at}
             message={msg}
             myUsername={myUsername}
           />

@@ -4,10 +4,11 @@ import MediaQuery from 'react-responsive'
 import ChatBox from './ChatBox'
 import Profile from './Profile'
 import Contacts from './Contacts'
+import MyProfileForm from './MyProfileForm'
 import authService from '../services/authService'
 import contactService from '../services/contactService'
 import socketService from '../services/socketService'
-import MyProfileForm from './MyProfileForm'
+import messageService from '../services/messageService'
 import { getLastSeenStatus } from '../util'
 
 class MainPage extends Component {
@@ -21,7 +22,6 @@ class MainPage extends Component {
 
     messages: [],
     unsentMessages: [],
-    unreadMessages: [],
     messageDraft: '',
   }
 
@@ -50,13 +50,11 @@ class MainPage extends Component {
     const { contacts } = this.state
     const messages = {}
     const unsentMessages = {}
-    const unreadMessages = {}
     for (let i = 0; i < contacts.length; i++) {
       messages[contacts[i].username] = []
       unsentMessages[contacts[i].username] = []
-      unreadMessages[contacts[i].username] = 0
     }
-    this.setState({ messages, unreadMessages, unsentMessages })
+    this.setState({ messages, unsentMessages })
   }
 
   render() {
@@ -135,9 +133,7 @@ class MainPage extends Component {
       contact.username.includes(searchQuery),
     )
 
-    this.setState({ searchQuery, filteredContacts }, () => {
-      console.log(searchQuery, filteredContacts)
-    })
+    this.setState({ searchQuery, filteredContacts })
   }
 
   handleAddContact = async () => {
@@ -166,25 +162,34 @@ class MainPage extends Component {
     if (!messageDraft) {
       return
     }
-    const newMsg = socketService.send(messageDraft, selectedContact)
+
+    const msg = {
+      id: null,
+      sender: authService.getCurrentUser(),
+      receiver: selectedContact,
+      text: messageDraft,
+      created_at: new Date().getTime() / 1000,
+      status: 'unsent',
+    }
+
+    socketService.send(msg)
+
     const unsentMessages = { ...this.state.unsentMessages }
-    const selectedContactUnsentMsgs = [
-      ...unsentMessages[selectedContact],
-      newMsg,
-    ]
+    const selectedContactUnsentMsgs = [...unsentMessages[selectedContact], msg]
     unsentMessages[selectedContact] = selectedContactUnsentMsgs
     this.setState({ messageDraft: '', unsentMessages })
   }
 
   handleMsgSent = (msg) => {
-    const receiver = msg['to']
+    msg.status = 'sent'
+
+    const receiver = msg['receiver']
     const unsentMessages = { ...this.state.unsentMessages }
     const receiverUnsentMsgs = unsentMessages[receiver].filter(
-      (m) => m.createdAt !== msg.createdAt,
+      (m) => m.text !== msg.text,
     )
     unsentMessages[receiver] = receiverUnsentMsgs
 
-    msg.status = 'sent'
     const messages = { ...this.state.messages }
     const receiverMessages = [...messages[receiver], msg]
     messages[receiver] = receiverMessages
@@ -193,8 +198,10 @@ class MainPage extends Component {
   }
 
   handleMsgReceive = (msg) => {
-    // if sender not in contacts refresh contacts
-    const sender = msg['from']
+    const sender = msg['sender']
+    // const contacts = [...this.state.contacts]
+    // if (!contacts.some(contact => contact.username === sender)) {
+    // }
     const messages = { ...this.state.messages }
     const senderMessages = [...messages[sender], msg]
     messages[sender] = senderMessages
@@ -239,11 +246,20 @@ class MainPage extends Component {
     this.setState({ view: 1 })
   }
 
-  handleSelectChat = (username) => {
-    const unreadMessages = this.state.unreadMessages
-    unreadMessages[username] = 0
-    this.setState({ selectedContact: username, view: 1, unreadMessages })
-    socketService.read(username)
+  handleSelectChat = async (selectedUsername) => {
+    try {
+      this.setState({ selectedContact: selectedUsername, view: 1 })
+
+      const { data: latestMessages } = await messageService.getMessages(
+        selectedUsername,
+        1,
+      )
+      const messages = { ...this.state.messages }
+      messages[selectedUsername] = latestMessages
+      this.setState({ messages })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   handleSelectMyProfile = () => {

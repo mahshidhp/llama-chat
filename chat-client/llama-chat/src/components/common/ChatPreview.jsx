@@ -13,7 +13,7 @@ class ChatPreview extends Component {
         <div className="col-2 my-auto align-items-center justify-content-center">
           {this.renderThumnail()}
         </div>
-        <div className="col-5 my-auto px-auto">
+        <div className="col-6 my-auto px-auto">
           {this.renderUsername(username)}
           {this.renderLastSeen()}
         </div>

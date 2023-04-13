@@ -29,7 +29,7 @@ class Contacts extends Component {
 
   renderSetting() {
     return (
-      <div class="dropdown">
+      <div className="dropdown">
         <button
           className="btn cursor-pointer"
           type="button"
@@ -39,16 +39,19 @@ class Contacts extends Component {
         >
           <FontAwesomeIcon icon={faBars} size="xl" style={{ color: '#000' }} />
         </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li>
             <Link to="/logout" className="dropdown-item">
               Logout
             </Link>
           </li>
-          <li onClick={this.props.onSelectMyProfile}>
-            <a href="#" className="dropdown-item">
+          <li>
+            <button
+              className="dropdown-item"
+              onClick={this.props.onSelectMyProfile}
+            >
               My profile
-            </a>
+            </button>
           </li>
         </ul>
       </div>
